@@ -1,7 +1,11 @@
 class Game < Ohm::Model
   attribute :attendence
-  attribute :date
   attribute :rs_id
+  
+  attribute :year
+  attribute :month
+  attribute :day
+  
   
   reference :home_team, Team
   reference :away_team, Team
@@ -10,5 +14,9 @@ class Game < Ohm::Model
   reference :away_lineup, Lineup
   
   index     :rs_id
-  index     :date
+  
+  index :year
+  index :month
+  index :day
+  
 end

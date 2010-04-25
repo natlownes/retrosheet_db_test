@@ -1,8 +1,14 @@
 class Lineup < Ohm::Model
-  attribute :date
+  attribute :year
+  attribute :month
+  attribute :day
   reference :game, Game
   reference :team, Team
   list :entries, LineupEntry
+  
+  index     :year
+  index     :month
+  index     :day
   
   def to_s
     a = []

@@ -100,7 +100,8 @@ end
 if options[:import]
   data.each do |game_data_row|
     date = game_data_row[0]
-    game = Game.new(:date => date)
+    date = Date.parse(date)
+    game = Game.new(:year => date.year, :month => date.month, :day => date.day)
     game.away_team = Team.find(:name => game_data_row[3]).first
     game.home_team = Team.find(:name => game_data_row[6]).first
     
@@ -108,17 +109,22 @@ if options[:import]
     
     game.save
   
-    home_lineup = Lineup.create(:team => game.home_team, :date => date, :game => game)
-    away_lineup = Lineup.create(:team => game.away_team, :date => date, :game => game)
+    home_lineup = Lineup.create(:team => game.home_team, :year => date.year, :month => date.month, :day => date.day, :game => game)
+    away_lineup = Lineup.create(:team => game.away_team, :year => date.year, :month => date.month, :day => date.day, :game => game)
   
     game.home_lineup = home_lineup
     game.away_lineup  = away_lineup
   
     game.save
   
-    home_lineup_data(game_data_row).each do |player_id, name, position_number|
+    home_lineup_data(game_data_row).each_with_index do |player_id_name_position_number, index|
+      player_id = player_id_name_position_number[0]
+      name = player_id_name_position_number[1]
+      position_number = player_id_name_position_number[2]
+      index += 1
+      
       player = Player.find(:rs_id => player_id).first || Player.create(:rs_id => player_id, :name => name)
-      entry = LineupEntry.new(:lineup => home_lineup)
+      entry = LineupEntry.new(:lineup => home_lineup, :batting_position => index)
       entry.player = player
       entry.position = Position.find(:number => position_number).first
       entry.save
@@ -128,9 +134,14 @@ if options[:import]
       home_lineup.save
     end
   
-    away_lineup_data(game_data_row).each do |player_id, name, position_number|
+    away_lineup_data(game_data_row).each_with_index do |player_id_name_position_number, index|
+      player_id = player_id_name_position_number[0]
+      name = player_id_name_position_number[1]
+      position_number = player_id_name_position_number[2]
+      index += 1
+      
       player = Player.find(:rs_id => player_id).first || Player.create(:rs_id => player_id, :name => name)
-      entry = LineupEntry.new(:lineup => away_lineup)
+      entry = LineupEntry.new(:lineup => home_lineup, :batting_position => index)
       entry.lineup = away_lineup
       entry.player = player
       entry.position = Position.find(:number => position_number).first
