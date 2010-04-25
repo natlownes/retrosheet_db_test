@@ -101,8 +101,8 @@ if options[:import]
   data.each do |game_data_row|
     date = game_data_row[0]
     game = Game.new(:date => date)
-    game.home_team = Team.find(:name => game_data_row[3]).first
-    game.away_team = Team.find(:name => game_data_row[6]).first
+    game.away_team = Team.find(:name => game_data_row[3]).first
+    game.home_team = Team.find(:name => game_data_row[6]).first
     
     puts "Importing #{date} - #{game.away_team.name} @ #{game.home_team.name}"
     

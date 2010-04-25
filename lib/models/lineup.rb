@@ -13,4 +13,10 @@ class Lineup < Ohm::Model
     a.join("\n")
   end
   
+  def to_a
+    self.entries.map do |lineup_entry|
+      [lineup_entry.player.name, lineup_entry.position.name]
+    end
+  end
+  
 end
