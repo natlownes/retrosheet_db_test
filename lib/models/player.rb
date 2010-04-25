@@ -5,6 +5,7 @@ class Player < Person
   collection :lineup_entries, LineupEntry
   
   index :rs_id
+  index :name
   
   def to_hex_color
     digest = Digest::MD5.hexdigest(self.rs_id)
