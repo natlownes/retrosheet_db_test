@@ -25,4 +25,8 @@ class Lineup < Ohm::Model
     end
   end
   
+  def date
+    Date.parse("#{year}-#{month}-#{day}")
+  end
+  
 end

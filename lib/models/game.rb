@@ -19,4 +19,8 @@ class Game < Ohm::Model
   index :month
   index :day
   
+  def date
+    Date.parse("#{year}-#{month}-#{day}")
+  end
+  
 end
