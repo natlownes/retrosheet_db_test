@@ -7,4 +7,16 @@ class Team < Ohm::Model
   
   index :name
   index :rs_id
+
+  def players
+    set = []
+    self.lineups.each do |lineup|
+      lineup.players.each do |p|
+        if !set.map(&:id).include?(p.id) 
+          set << p
+        end
+      end
+    end
+    set
+  end
 end
