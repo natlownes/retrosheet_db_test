@@ -14,13 +14,18 @@ class Lineup < Ohm::Model
     lineups = lineups.sort {|a,b| a.date <=> b.date }
     datastore = {
       :graph_lines => [],
-      :lineups => []
+      :lineups => {}
     }
     roster = Player.in_lineups(lineups)
     player_store = roster.inject({}) {|store, player| store[player.rs_id] = [] ; store }
 
     lineups.each do |lineup|
       game_n = lineup.game_number
+      datastore[:lineups][game_n] = {
+        :game => game_n,
+        :date => lineup.date,
+        :text => lineup.to_s
+      }
       roster.each do |player|
         if lineup.has_player?(player)
           entry = lineup.entries.detect {|e| e.player_id == player.id }
