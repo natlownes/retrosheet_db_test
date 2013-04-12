@@ -1,10 +1,17 @@
-require File.dirname(__FILE__) + "/../init"
+require File.expand_path(File.dirname(__FILE__)) + "/../init"
 require 'optparse'
-require 'fastercsv'
+require 'csv'
 require 'set'
 
-options = {}
+require 'game'
+require 'league'
+require 'lineup'
+require 'lineup_entry'
+require 'person'
+require 'position'
+require 'team'
 
+options = {}
 OptionParser.new do |opts|
   opts.banner = %{
     Usage:  import.rb [options] [file]
@@ -44,7 +51,7 @@ filepaths.each do |path|
   csv_text << File.read(path)
 end
 
-data = FasterCSV.parse(csv_text)
+data = CSV.parse(csv_text)
 
 if options[:bootstrap]
   ["NL", "AL"].each do |l|
@@ -130,7 +137,7 @@ if options[:import]
       entry.save
       home_lineup.game = game
       home_lineup.team = game.home_team
-      home_lineup.entries << entry
+      home_lineup.entries.push(entry)
       home_lineup.save
     end
   
@@ -148,7 +155,7 @@ if options[:import]
       entry.save
       away_lineup.game = game
       home_lineup.team = game.away_team
-      away_lineup.entries << entry
+      away_lineup.entries.push(entry)
       away_lineup.save
     end
   

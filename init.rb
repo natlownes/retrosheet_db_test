@@ -4,7 +4,8 @@ require 'ohm'
 require 'digest/md5'
 require 'facets'
 require 'json'
-require 'activesupport'
-Dir[File.dirname(__FILE__) + "/lib/models/**"].each { |f| require f }
+require 'active_support'
+models = File.join(File.expand_path(File.dirname(__FILE__)), 'lib', 'models')
+$LOAD_PATH.unshift(models)
 
 Ohm.connect

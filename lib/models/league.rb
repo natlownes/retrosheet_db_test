@@ -1,5 +1,5 @@
 class League < Ohm::Model
   attribute :name
   index     :name
-  collection  :teams, Team
+  collection  :teams, :Team
 end

@@ -1,3 +1,6 @@
+require 'team'
+require 'lineup'
+
 class Game < Ohm::Model
   attribute :attendence
   attribute :rs_id

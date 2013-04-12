@@ -1,3 +1,5 @@
+require 'lineup_entry'
+
 class Position < Ohm::Model
   attribute :number
   attribute :name
@@ -5,5 +7,5 @@ class Position < Ohm::Model
   index     :number
   index     :name
   
-  reference :lineup_entry, LineupEntry
+  reference :lineup_entry, :LineupEntry
 end

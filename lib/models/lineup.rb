@@ -1,10 +1,15 @@
+require 'game'
+require 'team'
+require 'lineup_entry'
+require 'player'
+
 class Lineup < Ohm::Model
   attribute :year
   attribute :month
   attribute :day
-  reference :game, Game
-  reference :team, Team
-  list :entries, LineupEntry
+  reference :game, :Game
+  reference :team, :Team
+  list :entries, :LineupEntry
   
   index     :year
   index     :month

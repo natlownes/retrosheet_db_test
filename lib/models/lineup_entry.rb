@@ -1,10 +1,14 @@
+require 'lineup'
+require 'position'
+require 'team'
+
 class LineupEntry < Ohm::Model
   attribute :batting_position
   index     :batting_position
   
-  reference :lineup, Lineup
-  reference :player, Player
-  reference :position, Position
+  reference :lineup, :Lineup
+  reference :player, :Player
+  reference :position, :Position
 
   def position_for_graph
     position_map = {

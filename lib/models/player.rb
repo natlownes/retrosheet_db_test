@@ -1,3 +1,6 @@
+require 'person'
+require 'lineup_entry'
+
 class Player < Person
   attribute :name
   attribute :rs_id
